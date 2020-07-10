@@ -1,80 +1,38 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { Link } from "gatsby"
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
 import Button from "../components/button"
 
-class Blog extends React.Component {
+class IndexPage extends React.Component {
   render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMdx.edges
+    const siteTitle = "ModoCoder"
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
-        <SEO title="All posts" />
-        <Bio />
-        <div style={{ margin: "20px 0 40px" }}>
-          {posts.map(({ node }) => {
-            const title = node.frontmatter.title || node.fields.slug
-            return (
-              <div key={node.fields.slug}>
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 4),
-                  }}
-                >
-                  <Link
-                    style={{ boxShadow: `none` }}
-                    to={`/blog${node.fields.slug}`}
-                  >
-                    {title}
-                  </Link>
-                </h3>
-                <small>{node.frontmatter.date}</small>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: node.frontmatter.description || node.excerpt,
-                  }}
-                />
-              </div>
-            )
-          })}
-        </div>
-        <Link to="/">
-          <Button marginTop="85px">Go Home</Button>
+        <SEO
+          title="Inicio"
+          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
+        />
+        <img style={{ margin: 0 }} src="./GatsbyScene.svg" alt="Gatsby Scene" />
+        <h1>
+          Hola internautas{" "}
+          <span role="img" aria-label="wave emoji">
+            👋
+          </span>
+        </h1>
+        <p>Bienvenidos a mi blog.</p>
+        <p>
+          Este es un blog dedicado a brindar una mano a todos aquellos que están dando sus primeros pasos en el desarrollo web al mismo tiempo que muestro mi propio recorrido por este fascinante mundo del desarrollo.
+        </p>
+        <p>Comencemos</p>
+        <Link to="/blog/">
+          <Button marginTop="35px">Ir al Blog</Button>
         </Link>
       </Layout>
     )
   }
 }
 
-export default Blog
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
-          }
-        }
-      }
-    }
-  }
-`
+export default IndexPage
